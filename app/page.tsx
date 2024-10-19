@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Terminal() {
   const [commands, setCommands] = useState<string[]>([
@@ -29,7 +30,10 @@ export default function Terminal() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-800 flex items-center justify-center p-4 relative">
+      <Link href="/test" className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+        Go to Test
+      </Link>
       <div className="w-full max-w-2xl bg-gray-900 rounded-lg overflow-hidden shadow-lg">
         {/* Terminal Header */}
         <div className="bg-gray-800 px-4 py-2 flex items-center">
