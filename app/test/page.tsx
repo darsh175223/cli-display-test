@@ -2,15 +2,23 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import axios from 'axios';  // Add axios for HTTP requests
 
 export default function Test() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setOutput(input);
-    setInput('');
+    try {
+      // Send input to the backend API to run the C++ program
+      const response = await axios.post('/api/runCpp', { input });
+      setOutput(response.data.output);  // Set the C++ output
+    } catch (error) {
+      console.error('Error running C++ program:', error);
+      setOutput('Error running C++ program');
+    }
+    setInput('');  // Clear the input field
   };
 
   return (
@@ -25,7 +33,7 @@ export default function Test() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             className="flex-grow px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter text..."
+            placeholder="Enter 'run'..."
           />
           <button
             type="submit"
